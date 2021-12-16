@@ -20,17 +20,15 @@
    <children>
       <AnchorPane fx:id="bgr" prefHeight="450.0" prefWidth="400.0">
          <children>
-            <Button fx:id="newGameBtn" layoutX="116.0" layoutY="250.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="168.0" text="New Game" textFill="#6b1717">
+            <Button fx:id="newGameBtn" layoutX="116.0" layoutY="250.0" mnemonicParsing="false" onAction="#startNewGame" prefHeight="26.0" prefWidth="168.0" text="New Game" textFill="#6b1717">
                <font>
                   <Font name="DejaVu Sans Bold" size="12.0" />
                </font>
             </Button>
             <ImageView fitHeight="182.0" fitWidth="168.0" layoutX="116.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../logo.png" />
-               </image>
+               <Image url="@../logo.png" />
             </ImageView>
-            <Button fx:id="exitBtn" layoutX="116.0" layoutY="304.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="168.0" text="Exit" textFill="#6b1717">
+            <Button fx:id="exitBtn" layoutX="116.0" layoutY="304.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="26.0" prefWidth="168.0" text="Exit" textFill="#6b1717">
                <font>
                   <Font name="DejaVu Sans Bold" size="12.0" />
                </font>

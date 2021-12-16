@@ -12,9 +12,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage menuStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
         Scene scene = new Scene(root, 400, 450);
-        String css = "style.css";
+        String css = "styleMenu.css";
         scene.getStylesheets().add(getClass().getResource(css).toExternalForm());
         Image logo = new Image("logo.png");
 
