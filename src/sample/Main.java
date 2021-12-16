@@ -11,16 +11,18 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage menuStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 400, 450);
         String css = "style.css";
+        scene.getStylesheets().add(getClass().getResource(css).toExternalForm());
         Image logo = new Image("logo.png");
 
-        primaryStage.getIcons().add(logo);
-        primaryStage.setTitle("Snake & Ladder Game");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        menuStage.getIcons().add(logo);
+        menuStage.setTitle("Snake & Ladder Game");
+        menuStage.setScene(scene);
+        menuStage.setResizable(false);
+        menuStage.show();
     }
 
 
