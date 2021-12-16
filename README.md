@@ -1,5 +1,6 @@
 # Advanced Programming final project
-###Made by Ambuj Bhaskar Tiwari `2020358` and Aditya Ahuja `2020275`
+## Snake & Ladder game
+### *Made by* Ambuj Bhaskar Tiwari `2020358` and Aditya Ahuja `2020275`
 
 - The source code is in the `src` directory in the `sample` package.
 - You can run the application by running the `main()` method in the `Main` class.
