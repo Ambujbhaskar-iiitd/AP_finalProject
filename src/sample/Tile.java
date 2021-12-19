@@ -3,13 +3,16 @@ package sample;
 import javafx.scene.shape.Rectangle;
 
 public class Tile extends Rectangle{
+    private final int tileSize;
     private final int num;
     private Snake snake;
     private Ladder ladder;
-    Tile(int number){
+    Tile(int TileSize, int number){
+        tileSize = TileSize;
         num = number;
     }
-    Tile(int number, Snake snake, Ladder ladder){
+    Tile(int TileSize, int number, Snake snake, Ladder ladder){
+        tileSize = TileSize;
         num = number;
         this.snake = snake;
         this.ladder = ladder;
@@ -30,4 +33,9 @@ public class Tile extends Rectangle{
     public void setLadder(Ladder ladder) {
         this.ladder = ladder;
     }
+
+    public int getTileSize() {
+        return tileSize;
+    }
+
 }
