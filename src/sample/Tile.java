@@ -2,43 +2,32 @@ package sample;
 
 import javafx.scene.shape.Rectangle;
 
-public class Tile {
+public class Tile extends Rectangle{
     private final int num;
-    private boolean hasSnakeMouth;
-    private boolean hasLadderBase;
-    Rectangle rectangle;
-    Tile(int number, Rectangle rect){
+    private Snake snake;
+    private Ladder ladder;
+    Tile(int number){
         num = number;
-        rectangle = rect;
     }
-    Tile(int number, boolean snakemouth, boolean ladderbase, Rectangle rect){
+    Tile(int number, Snake snake, Ladder ladder){
         num = number;
-        hasSnakeMouth = snakemouth;
-        hasLadderBase = ladderbase;
-        rectangle = rect;
+        this.snake = snake;
+        this.ladder = ladder;
     }
 
-    public boolean isHasSnakeMouth() {
-        return hasSnakeMouth;
+    public Snake getSnake() {
+        return snake;
     }
 
-    public void setHasSnakeMouth(boolean hasSnakeMouth) {
-        this.hasSnakeMouth = hasSnakeMouth;
+    public void setSnake(Snake snake) {
+        this.snake = snake;
     }
 
-    public boolean isHasLadderBase() {
-        return hasLadderBase;
+    public Ladder getLadder() {
+        return ladder;
     }
 
-    public void setHasLadderBase(boolean hasLadderBase) {
-        this.hasLadderBase = hasLadderBase;
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
-
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
+    public void setLadder(Ladder ladder) {
+        this.ladder = ladder;
     }
 }
