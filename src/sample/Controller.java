@@ -39,13 +39,7 @@ public class Controller {
         stage.show();
     }
     public void playGame(ActionEvent e) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("game.fxml"));
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("styleGame.css").toExternalForm());
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+        Game game = new Game((Stage) ((Node)e.getSource()).getScene().getWindow());
     }
     public void exitApp(){
         Platform.exit();
