@@ -1,7 +1,11 @@
 package sample;
 
+import javafx.scene.image.Image;
+
 public class Snake {
-    Tile head;
-    Tile tail;
+    private Tile head;
+    private Tile tail;
+    private Image sprite;
+
 
 }

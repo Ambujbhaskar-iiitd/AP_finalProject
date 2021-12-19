@@ -2,19 +2,17 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="830.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Game">
    <children>
-      <ImageView fitHeight="84.0" fitWidth="33.0" layoutX="267.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../redToken.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="54.0" fitWidth="43.0" layoutX="300.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="Poggerino2" fx:id="Player2" fitHeight="36.0" fitWidth="31.0" layoutX="333.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../blueToken.png" />
-         </image>
-      </ImageView>
+         </image></ImageView>
+      <ImageView id="Poggerino1" fx:id="Player1" fitHeight="36.0" fitWidth="31.0" layoutX="278.0" layoutY="334.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../redToken.png" />
+         </image></ImageView>
    </children>
-</AnchorPane>
+</Pane>

@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Tile extends Rectangle{
@@ -7,9 +9,13 @@ public class Tile extends Rectangle{
     private final int num;
     private Snake snake;
     private Ladder ladder;
-    Tile(int TileSize, int number){
+
+    Tile(int TileSize, int number,Color color){
         tileSize = TileSize;
         num = number;
+        setFill(color);
+        setWidth(TileSize);
+        setHeight(TileSize);
     }
     Tile(int TileSize, int number, Snake snake, Ladder ladder){
         tileSize = TileSize;
