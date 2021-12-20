@@ -20,6 +20,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Controller {
     @FXML
@@ -41,10 +43,11 @@ public class Controller {
     private Player player1;
     private Player player2;
     private static int boardHeight=825;
-    private static int boardWidth=665;
+    private static int boardWidth=663;
     private static int tileSize=60;
     private Group TileGroup = new Group();
     private Pane GameRoot;
+    ArrayList<ArrayList<Tile>> TilesArray = new ArrayList<>();
 
     public void startNewGame(ActionEvent e) throws IOException {
         root = FXMLLoader.load(getClass().getResource("NewGameOptions.fxml"));
@@ -80,14 +83,14 @@ public class Controller {
         String name1 = p1name.getText();
         String name2 = p2name.getText();
 
+        // Tile Creation
         Tile waitingTile = createWaitingTile();
         makeBoard();
 
-        player1 = new Player("BLUE", name1, waitingTile);
-        player2 = new Player("RED", name2, waitingTile);
+        player1 = new Player("BLUE", name1, waitingTile, GameRoot);
+        player2 = new Player("RED", name2, waitingTile, GameRoot);
 
-        showTokens(player1, player2, waitingTile);
-        showPlayerNames(player1, player2);
+        Player.showPlayerNames(player1, player2, GameRoot);
 
         Stage GameStage = new Stage();
         Image logo = new Image("logo.png");
@@ -129,6 +132,7 @@ public class Controller {
             }
         }
         addBoardImg();
+        addUpArrows();
     }
 
     public Tile createWaitingTile(){
@@ -151,48 +155,15 @@ public class Controller {
         return overlay;
     }
 
-    public void showTokens(Player player1, Player player2, Tile waitingTile){
-        ImageView p1Token = new ImageView();
-        ImageView p2Token = new ImageView();
-
-        p1Token.setImage(player1.getToken());
-        p1Token.setFitHeight(36);
-        p1Token.setFitWidth(20);
-        p1Token.setTranslateY(waitingTile.getPlayerY(player1));
-        p1Token.setTranslateX(waitingTile.getPlayerX(player1));
-
-        p2Token.setImage(player2.getToken());
-        p2Token.setFitHeight(35);
-        p2Token.setFitWidth(20);
-        p2Token.setTranslateY(waitingTile.getPlayerY(player2));
-        p2Token.setTranslateX(waitingTile.getPlayerY(player2));
-
-        TileGroup.getChildren().add(p1Token);
-        TileGroup.getChildren().add(p2Token);
-
-        p1Token.toFront();
-        p2Token.toFront();
+    public void addUpArrows(){
+        ImageView frame = new ImageView();
+        Image upArrowImg = new Image("up_arrow.png");
+        frame.setFitHeight(50);
+        frame.setFitWidth(60);
+        frame.setTranslateX(25);
+        frame.setTranslateY(650);
+        frame.setImage(upArrowImg);
+        GameRoot.getChildren().add(frame);
+        frame.toFront();
     }
-
-    public void showPlayerNames(Player player1, Player player2){
-        Label p1label = new Label(player1.getName());
-        Label p2label = new Label(player2.getName());
-
-        p1label.setFont(Font.font("Dejavu Sans Bold", 24.0));
-        p2label.setFont(Font.font("Dejavu Sans Bold", 24.0));
-        p1label.setTextFill(Color.WHITE);
-        p2label.setTextFill(Color.WHITE);
-        p1label.setTextAlignment(TextAlignment.RIGHT);
-        p2label.setTextAlignment(TextAlignment.LEFT);
-
-        p1label.setTranslateX(89);
-        p1label.setTranslateY(720);
-
-        p2label.setTranslateX(391);
-        p2label.setTranslateY(720);
-
-        GameRoot.getChildren().add(p1label);
-        GameRoot.getChildren().add(p2label);
-    }
-
 }
