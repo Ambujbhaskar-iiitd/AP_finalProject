@@ -21,9 +21,9 @@ import java.io.IOException;
 public class Game{
 
     @FXML
-    private static Label lbl1;
+    private Label lbl1;
     @FXML
-    private static Label lbl2;
+    private Label lbl2;
 
     @FXML
     private Button btn1;
@@ -44,9 +44,9 @@ public class Game{
         root.getChildren().addAll(TileGroup);
         Scene scene = new Scene(root,boardHeight,boardWidth);
         scene.getStylesheets().add(getClass().getResource("styleGame.css").toExternalForm());
-//        displayName(player1, player2);
-        System.out.println(lbl1.getText());
-        System.out.println(lbl2.getText());
+        displayName(player1, player2);
+//        System.out.println(lbl1.getText());
+//        System.out.println(lbl2.getText());
         makeBoard(root);
         currentStage.setScene(scene);
         currentStage.setHeight(boardHeight);
@@ -138,11 +138,6 @@ public class Game{
 //
 //        root.getChildren().add(p1label);
 //        root.getChildren().add(p2label);
-
-
-
-
-
     }
 
 
