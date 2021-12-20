@@ -18,4 +18,20 @@ public class Player {
             token = new Image("redToken.png");
         }
     }
+
+    public Image getToken() {
+        return token;
+    }
+
+    public Tile getTile() {
+        return tile;
+    }
+
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

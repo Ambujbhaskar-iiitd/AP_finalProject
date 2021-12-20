@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -18,6 +19,10 @@ public class Controller {
     private Button newGameBtn;
     @FXML
     private Button exitBtn;
+    @FXML
+    private TextField p1name;
+    @FXML
+    private TextField p2name;
 
     private Stage stage;
     private Scene scene;
@@ -40,9 +45,18 @@ public class Controller {
         stage.show();
     }
     public void playGame(ActionEvent e) throws IOException {
+        String name1, name2;
+        name1 = p1name.getText();
+        name2 = p2name.getText();
+        Player player1 = new Player("BLUE", name1);
+        Player player2 = new Player("RED", name2);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
         Pane root =loader.load();
         Game gameController = loader.getController();
+        gameController.setPlayer1(player1);
+        gameController.setPlayer2(player2);
+//        gameController.displayName(player1, player2);
         gameController.makeGame((Stage) ((Node)e.getSource()).getScene().getWindow());
 
     }
