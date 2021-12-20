@@ -1,12 +1,14 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,9 +20,12 @@ import java.io.IOException;
 
 public class Game {
 
-    @FXML
-    private Label myLabel;
 
+    @FXML
+    private Label lbl1;
+
+    @FXML
+    private Button btn1;
 
     private static int boardHeight=830;
     private static int boardWidth=665;
@@ -30,8 +35,7 @@ public class Game {
 
     }
 
-    public Game(Stage currentStage) throws IOException {
-        myLabel.setText("GAMING!!!!!!!!!");
+    public void makeGame(Stage currentStage) throws IOException {
         Pane root = FXMLLoader.load(getClass().getResource("game.fxml"));
         root.getChildren().addAll(TileGroup);
         makeBoard();
@@ -70,12 +74,16 @@ public class Game {
             }
         ImageView overlay = new ImageView();
         Image boardImg = new Image("Board.png");
-        overlay.setFitWidth(600);
+        overlay.setFitWidth(624);
         overlay.setFitHeight(600);
-        overlay.setTranslateX(0.4*tileSize);
+        overlay.setTranslateX(0);
         overlay.setTranslateY(tileSize);
         overlay.setImage(boardImg);
         TileGroup.getChildren().add(overlay);
         }
+    }
+
+    public void setLabel(ActionEvent e) throws IOException {
+        lbl1.setText("TEST");
     }
 }

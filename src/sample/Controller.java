@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -39,7 +40,11 @@ public class Controller {
         stage.show();
     }
     public void playGame(ActionEvent e) throws IOException {
-        Game game = new Game((Stage) ((Node)e.getSource()).getScene().getWindow());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
+        Pane root =loader.load();
+        Game gameController = loader.getController();
+        gameController.makeGame((Stage) ((Node)e.getSource()).getScene().getWindow());
+
     }
     public void exitApp(){
         Platform.exit();
