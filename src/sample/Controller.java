@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,12 +15,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class Controller {
     @FXML
@@ -40,14 +38,13 @@ public class Controller {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
     private Player player1;
     private Player player2;
-    private static int boardHeight=830;
+    private static int boardHeight=825;
     private static int boardWidth=665;
+    private static int tileSize=60;
     private Group TileGroup = new Group();
-
-
+    private Pane GameRoot;
 
     public void startNewGame(ActionEvent e) throws IOException {
         root = FXMLLoader.load(getClass().getResource("NewGameOptions.fxml"));
@@ -66,32 +63,49 @@ public class Controller {
         stage.show();
     }
 
+    public void exitGame(ActionEvent e) throws IOException {
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    public void exitApp(){
+        Platform.exit();
+    }
+
     public void playGame(ActionEvent e) throws IOException {
-        String name1, name2;
-        name1 = p1name.getText();
-        name2 = p2name.getText();
-        player1 = new Player("BLUE", name1);
-        player2 = new Player("RED", name2);
 
+        GameRoot = FXMLLoader.load(getClass().getResource("game.fxml"));
+        GameRoot.getChildren().addAll(TileGroup);
+        // Reading Player names from text fields
+        String name1 = p1name.getText();
+        String name2 = p2name.getText();
 
-        Pane root = FXMLLoader.load(getClass().getResource("game.fxml"));
+        Tile waitingTile = createWaitingTile();
         makeBoard();
-        root.getChildren().addAll(TileGroup);
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+
+        player1 = new Player("BLUE", name1, waitingTile);
+        player2 = new Player("RED", name2, waitingTile);
+
+        showTokens(player1, player2, waitingTile);
+        showPlayerNames(player1, player2);
+
+        Stage GameStage = new Stage();
+        Image logo = new Image("logo.png");
+        GameStage.getIcons().add(logo);
+        GameStage.setTitle("Snake & Ladder");
+
+        scene = new Scene(GameRoot);
         scene.getStylesheets().add(getClass().getResource("styleMenu.css").toExternalForm());
-        stage.setScene(scene);
-        stage.setHeight(boardHeight);
-        stage.setWidth(boardWidth);
-        stage.centerOnScreen();
-        stage.show();
-
-
+        GameStage.setScene(scene);
+        GameStage.setHeight(boardHeight);
+        GameStage.setWidth(boardWidth);
+        GameStage.centerOnScreen();
+        GameStage.show();
     }
 
     public void makeBoard(){
-        int tileSize=60;
-        int counter=-1;
+
+        int counter;
         for (int i=0;i<10;i++){
             for (int j=0;j<10;j++){
                 Color col;
@@ -114,27 +128,18 @@ public class Controller {
                 TileGroup.getChildren().add(tile);
             }
         }
+        addBoardImg();
+    }
 
+    public Tile createWaitingTile(){
         Tile waitingArea = new Tile(tileSize,0,Color.color((float)154/255, (float)50/255 ,(float)50/255));
         waitingArea.setTranslateX((0+0.4)*tileSize);
         waitingArea.setTranslateY((10+1)*tileSize);
         TileGroup.getChildren().add(waitingArea);
+        return waitingArea;
+    }
 
-        ImageView p1Token = new ImageView();
-        ImageView p2Token = new ImageView();
-
-        p1Token.setImage(player1.getToken());
-        p1Token.setFitHeight(36);
-        p1Token.setFitWidth(20);
-        p1Token.setTranslateY(630);
-        p1Token.setTranslateX(35);
-
-        p2Token.setImage(player2.getToken());
-        p2Token.setFitHeight(35);
-        p2Token.setFitWidth(20);
-        p2Token.setTranslateY(630);
-        p2Token.setTranslateX(55);
-
+    public ImageView addBoardImg(){
         ImageView overlay = new ImageView();
         Image boardImg = new Image("Board.png");
         overlay.setFitWidth(624);
@@ -142,30 +147,52 @@ public class Controller {
         overlay.setTranslateX(0);
         overlay.setTranslateY(tileSize);
         overlay.setImage(boardImg);
+        TileGroup.getChildren().add(overlay);
+        return overlay;
+    }
+
+    public void showTokens(Player player1, Player player2, Tile waitingTile){
+        ImageView p1Token = new ImageView();
+        ImageView p2Token = new ImageView();
+
+        p1Token.setImage(player1.getToken());
+        p1Token.setFitHeight(36);
+        p1Token.setFitWidth(20);
+        p1Token.setTranslateY(waitingTile.getPlayerY(player1));
+        p1Token.setTranslateX(waitingTile.getPlayerX(player1));
+
+        p2Token.setImage(player2.getToken());
+        p2Token.setFitHeight(35);
+        p2Token.setFitWidth(20);
+        p2Token.setTranslateY(waitingTile.getPlayerY(player2));
+        p2Token.setTranslateX(waitingTile.getPlayerY(player2));
 
         TileGroup.getChildren().add(p1Token);
         TileGroup.getChildren().add(p2Token);
 
-        TileGroup.getChildren().add(overlay);
         p1Token.toFront();
         p2Token.toFront();
-
     }
 
-    public void setLabel(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
-        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 400, 450);
-        scene.getStylesheets().add(getClass().getResource("styleMenu.css").toExternalForm());
-        stage.setWidth(400);
-        stage.setHeight(450);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-    }
+    public void showPlayerNames(Player player1, Player player2){
+        Label p1label = new Label(player1.getName());
+        Label p2label = new Label(player2.getName());
 
-    public void exitApp(){
-        Platform.exit();
+        p1label.setFont(Font.font("Dejavu Sans Bold", 24.0));
+        p2label.setFont(Font.font("Dejavu Sans Bold", 24.0));
+        p1label.setTextFill(Color.WHITE);
+        p2label.setTextFill(Color.WHITE);
+        p1label.setTextAlignment(TextAlignment.RIGHT);
+        p2label.setTextAlignment(TextAlignment.LEFT);
+
+        p1label.setTranslateX(89);
+        p1label.setTranslateY(720);
+
+        p2label.setTranslateX(391);
+        p2label.setTranslateY(720);
+
+        GameRoot.getChildren().add(p1label);
+        GameRoot.getChildren().add(p2label);
     }
 
 }

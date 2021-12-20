@@ -18,7 +18,7 @@
       </Label>
       <TextField fx:id="p1name" layoutX="126.0" layoutY="89.0" prefHeight="26.0" prefWidth="218.0" promptText="Enter Player1 name" text="Player1" />
       <TextField fx:id="p2name" layoutX="126.0" layoutY="134.0" prefHeight="26.0" prefWidth="217.0" promptText="Enter Player2 name" text="Player2" />
-      <Circle fill="#ff1f1f" layoutX="69.0" layoutY="102.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Circle fill="DODGERBLUE" layoutX="69.0" layoutY="147.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="#ff1f1f" layoutX="69.0" layoutY="147.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="DODGERBLUE" layoutX="69.0" layoutY="102.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

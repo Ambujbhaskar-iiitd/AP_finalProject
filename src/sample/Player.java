@@ -8,10 +8,11 @@ public class Player {
     private Tile tile;
     private final String color;
 
-    public Player(String color, String name) {
+    public Player(String color, String name, Tile tile) {
+        this.tile = tile;
         this.color = color;
         this.name = name;
-        if (color == "BLUE"){
+        if (color.equals("BLUE")){
             token = new Image("blueToken.png");
         }
         else{
@@ -33,5 +34,9 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public String getColor() {
+        return color;
     }
 }
