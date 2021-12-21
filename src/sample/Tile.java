@@ -4,7 +4,12 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+
 public class Tile extends Rectangle{
+
+    static ArrayList<Tile> TileArray = new ArrayList<>(101);
+
     private final int tileSize;
     private final int num;
     private Snake snake;
@@ -20,11 +25,34 @@ public class Tile extends Rectangle{
         setWidth(TileSize);
         setHeight(TileSize);
     }
+
     Tile(int TileSize, int number, Snake snake, Ladder ladder){
         tileSize = TileSize;
         num = number;
         this.snake = snake;
         this.ladder = ladder;
+    }
+
+    public static Tile getTile(int tileNum){
+        for (Tile t: TileArray){
+            if (t.getNum()==tileNum){
+                return t;
+            }
+        }
+        System.out.println("Tile of number "+tileNum+" not present.");
+        return null;
+    }
+
+    public static void addSnake(Snake snake){
+        Tile tile = getTile(snake.getHead());
+
+        tile.setSnake(snake);
+    }
+
+    public static void addLadder(Ladder ladder){
+        Tile tile = getTile(ladder.getBase());
+
+        tile.setLadder(ladder);
     }
 
     public Snake getSnake() {

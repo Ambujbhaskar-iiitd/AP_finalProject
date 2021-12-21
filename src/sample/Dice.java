@@ -27,6 +27,7 @@ public class Dice extends Button {
         diceFrame.setFitWidth(80);
         diceFrame.setPreserveRatio(true);
         diceFrame.setImage(dice2);
+
         this.setGraphic(diceFrame);
     }
     public int roll() throws InterruptedException {
@@ -99,12 +100,14 @@ class DiceRoll implements Runnable{
     }
     @Override
     public void run(){
-
+//        dice.setDisable(false);
         ImageView diceFrame = dice.getDiceFrame();
         Image transition = dice.getTransition();
         int number = dice.getNumber();
 
+//        dice.setVisible(false);
         diceFrame.setImage(transition);
+//        dice.setVisible(true);
 
         try {
             Thread.sleep(500);
@@ -132,5 +135,6 @@ class DiceRoll implements Runnable{
                 diceFrame.setImage(dice.getDice6());
                 break;
         }
+//        dice.setDisable(false);
     }
 }

@@ -19,6 +19,8 @@ public class Player {
     private final String color;
     private Pane root;
     private boolean locked=true;
+    private boolean onLadderTile = false;
+    private boolean onSnakeTile = false;
 
     public Player(String color, String name, Tile tile, Pane root) {
         this.root = root;
@@ -74,17 +76,28 @@ public class Player {
         this.pToken.toFront();
     }
 
+    public boolean isOnLadderTile() {
+        return onLadderTile;
+    }
+
+    public void setOnLadderTile(boolean onLadderTile) {
+        this.onLadderTile = onLadderTile;
+    }
+
+    public boolean isOnSnakeTile() {
+        return onSnakeTile;
+    }
+
+    public void setOnSnakeTile(boolean onSnakeTile) {
+        this.onSnakeTile = onSnakeTile;
+    }
+
     public boolean isLocked() {
         return locked;
     }
 
     public void toggleLocked() {
-        if (!this.locked){
-            this.locked = true;
-        }
-        else{
-            this.locked = false;
-        }
+        this.locked = !this.locked;
     }
 
     public Image getToken() {
@@ -140,50 +153,63 @@ class movement implements Runnable{
             int dest;
             if (player.getTile().getNum()+moveBy>100)
                 return;
+            else if (player.getTile().getSnake()!= null){
+                player.setOnSnakeTile(true);
+                dest = player.getTile().getSnake().getTail();
+            }
+            else if (player.getTile().getLadder()!=null){
+                player.setOnLadderTile(true);
+                dest = player.getTile().getLadder().getTop();
+            }
             else dest=player.getTile().getNum()+moveBy;
 
             System.out.println("dest: "+ dest);
             int current=source;
             TranslateTransition translate;
 
-
-            while (current!=dest){
+            if (player.isOnLadderTile()){
                 translate = new TranslateTransition();
                 translate.setNode(player.getTokenFrame());
-                System.out.println("CURRENTLY AT:"+current);
-
-                if (current%10==0){
-//                    player.getTokenFrame().setTranslateY(player.getTokenFrame().getTranslateY()-60);
-//                    translate.setFromY(player.getTokenFrame().getTranslateY());
-//                    translate.setToY(player.getTokenFrame().getTranslateY()-60);
-                    translate.setByY(-60);
-
-                }
-                else{
-                    if ((current/10)%2==0){
-//                        player.getTokenFrame().setTranslateX(player.getTokenFrame().getTranslateX()+60);
-//                        translate.setFromX(player.getTokenFrame().getTranslateX());
-//                        translate.setToX(player.getTokenFrame().getTranslateX()+60);
-                        translate.setByX(60);
-                    }
-                    else {
-//                        player.getTokenFrame().setTranslateX(player.getTokenFrame().getTranslateX()-60);
-//                        translate.setFromX(player.getTokenFrame().getTranslateX());
-//                        translate.setToX(player.getTokenFrame().getTranslateX()-60);
-                        translate.setByX(-60);
-                    }
-                }
+                translate.setFromX(Tile.getTile(dest).getPlayerX(player));
+                translate.setFromY(Tile.getTile(dest).getPlayerY(player));
                 translate.play();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                current++;
             }
-            player.setTile(Controller.TileArray.get(dest));
-//           if (this.tile.getNum()==100)
-//               System.out.println("WINNERS "+this.getName());
+            else if (player.isOnSnakeTile()){
+                translate = new TranslateTransition();
+                translate.setNode(player.getTokenFrame());
+                translate.setFromX(Tile.getTile(dest).getPlayerX(player));
+                translate.setFromY(Tile.getTile(dest).getPlayerY(player));
+                translate.play();
+            }
+            else {
+                while (current!=dest){
+                    translate = new TranslateTransition();
+                    translate.setNode(player.getTokenFrame());
+                    System.out.println("CURRENTLY AT:"+current);
+
+                    if (current%10==0){
+                        translate.setByY(-60);
+
+                    }
+                    else{
+                        if ((current/10)%2==0){
+                            translate.setByX(60);
+                        }
+                        else {
+                            translate.setByX(-60);
+                        }
+                    }
+                    translate.play();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    current++;
+                }
+            }
+            player.setTile(Tile.TileArray.get(dest));
+            if (player.getTile().getNum()==100) System.out.println("WINNERS "+player.getName());
         }
     }
 

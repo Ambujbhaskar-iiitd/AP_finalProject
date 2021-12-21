@@ -49,8 +49,58 @@ public class Controller {
     private Group TileGroup = new Group();
     private Pane GameRoot;
     private static boolean player1turn = true;
-    static ArrayList<Tile> TileArray = new ArrayList<>(101);
+
     private static Dice gameDice = new Dice();
+
+    public void playGame(ActionEvent e) throws IOException {
+
+        GameRoot = FXMLLoader.load(getClass().getResource("game.fxml"));
+        GameRoot.getChildren().addAll(TileGroup);
+        // Reading Player names from text fields
+        String name1 = p1name.getText();
+        String name2 = p2name.getText();
+
+        // Tile Creation
+        makeBoard();
+        Tile waitingTile = createWaitingTile();
+
+        for (Tile t: Tile.TileArray) {
+            System.out.println("tileno.: "+t.getNum());
+        }
+
+        Tile.addSnake(new Snake(99, 59));
+        Tile.addSnake(new Snake(93, 69));
+        Tile.addSnake(new Snake(75, 17));
+        Tile.addSnake(new Snake(23, 5));
+        Tile.addSnake(new Snake(32, 6));
+
+        Tile.addLadder(new Ladder(24, 78));
+        Tile.addLadder(new Ladder(65, 89));
+        Tile.addLadder(new Ladder(15, 53));
+        Tile.addLadder(new Ladder(10, 31));
+        Tile.addLadder(new Ladder(39, 60));
+
+        player1 = new Player("BLUE", name1, waitingTile, GameRoot);
+        player2 = new Player("RED", name2, waitingTile, GameRoot);
+
+        Player.showPlayerNames(player1, player2, GameRoot);
+
+        makeDice();
+
+        Stage GameStage = new Stage();
+        Image logo = new Image("logo.png");
+        GameStage.getIcons().add(logo);
+        GameStage.setTitle("Snake & Ladder");
+
+
+        scene = new Scene(GameRoot);
+        scene.getStylesheets().add(getClass().getResource("styleGame.css").toExternalForm());
+        GameStage.setScene(scene);
+        GameStage.setHeight(boardHeight);
+        GameStage.setWidth(boardWidth);
+        GameStage.centerOnScreen();
+        GameStage.show();
+    }
 
     public void startNewGame(ActionEvent e) throws IOException {
         root = FXMLLoader.load(getClass().getResource("NewGameOptions.fxml"));
@@ -79,48 +129,14 @@ public class Controller {
         Platform.exit();
     }
 
-    public void playGame(ActionEvent e) throws IOException {
-
-        GameRoot = FXMLLoader.load(getClass().getResource("game.fxml"));
-        GameRoot.getChildren().addAll(TileGroup);
-        // Reading Player names from text fields
-        String name1 = p1name.getText();
-        String name2 = p2name.getText();
-
-        // Tile Creation
-        makeBoard();
-        Tile waitingTile = createWaitingTile();
-
-        player1 = new Player("BLUE", name1, waitingTile, GameRoot);
-        player2 = new Player("RED", name2, waitingTile, GameRoot);
-
-        Player.showPlayerNames(player1, player2, GameRoot);
-
-        makeDice();
-
-        Stage GameStage = new Stage();
-        Image logo = new Image("logo.png");
-        GameStage.getIcons().add(logo);
-        GameStage.setTitle("Snake & Ladder");
-
-
-        scene = new Scene(GameRoot);
-        scene.getStylesheets().add(getClass().getResource("styleGame.css").toExternalForm());
-        GameStage.setScene(scene);
-        GameStage.setHeight(boardHeight);
-        GameStage.setWidth(boardWidth);
-        GameStage.centerOnScreen();
-        GameStage.show();
-    }
-
     public void makeBoard() {
 
         //Initializing the TileArray Array List
         Tile temp = new Tile(60, -1, Color.BLACK);
-        TileArray.add(temp);
+        Tile.TileArray.add(temp);
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++)
-                TileArray.add(temp);
+                Tile.TileArray.add(temp);
         }
 
         int counter;
@@ -142,10 +158,10 @@ public class Controller {
                 tile.setTranslateX((j + 0.4) * tileSize);
                 tile.setTranslateY((i + 1) * tileSize);
                 TileGroup.getChildren().add(tile);
-                tile.show();
-                TileArray.set(counter, tile);
+//                tile.show();
+                Tile.TileArray.set(counter, tile);
             }
-            System.out.println();
+//            System.out.println();
         }
 
 
@@ -159,7 +175,7 @@ public class Controller {
         waitingArea.setTranslateX((0 + 0.4) * tileSize);
         waitingArea.setTranslateY((10 + 1) * tileSize);
         TileGroup.getChildren().add(waitingArea);
-        TileArray.set(0, waitingArea);
+        Tile.TileArray.set(0, waitingArea);
         return waitingArea;
     }
 
@@ -214,9 +230,6 @@ public class Controller {
 
     public void RollDice() throws IOException, InterruptedException {
         int roll = gameDice.roll();
-//        DiceLbl.setText("Roll: " + roll);
-//        DiceLbl.setTextFill(Color.WHITE);
-//        DiceLbl.setFont(Font.font("Dejavu Sans Bold"));
 
         if (player1turn) {
             player1.MovePlayer(roll);
@@ -230,5 +243,6 @@ public class Controller {
             Thread.sleep(1000);
             stage.close();
         }
+
     }
 }

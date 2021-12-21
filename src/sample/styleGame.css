@@ -12,12 +12,12 @@
     -fx-font-weight: bold;
 }
 #DICE{
-    -fx-background-color: #000000;
+    -fx-background-color: #ffffff;
     -fx-font-family: "DejaVu Sans";
     -fx-font-weight: bold;
 }
 #DICE:hover{
-    -fx-background-color: #ffffff;
+    -fx-background-color: #fff8f8;
     -fx-font-family: "DejaVu Sans";
     -fx-font-weight: bold;
 }
