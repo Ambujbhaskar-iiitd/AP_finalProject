@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,13 +9,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 public class Player {
     private final String name;
     private Image token;
+    private ImageView pToken;
     private Tile tile;
     private final String color;
     private Pane root;
+    private boolean locked=true;
 
     public Player(String color, String name, Tile tile, Pane root) {
         this.root = root;
@@ -52,26 +57,28 @@ public class Player {
     }
 
     public void showToken(Tile waitingTile){
-        ImageView pToken = new ImageView();
+        this.pToken = new ImageView();
 
-        pToken.setImage(this.getToken());
+        this.pToken.setImage(this.getToken());
         if (this.color.equals("BLUE")){
-            pToken.setFitHeight(36);
+            this.pToken.setFitHeight(36);
         }else {
-            pToken.setFitHeight(35);
+            this.pToken.setFitHeight(35);
         }
-        pToken.setFitWidth(20);
+        this.pToken.setFitWidth(20);
 
-        pToken.setTranslateY(waitingTile.getPlayerY(this));
-        pToken.setTranslateX(waitingTile.getPlayerX(this));
+        this.pToken.setTranslateY(waitingTile.getPlayerY(this));
+        this.pToken.setTranslateX(waitingTile.getPlayerX(this));
 
-        root.getChildren().add(pToken);
-        pToken.toFront();
+        root.getChildren().add(this.pToken);
+        this.pToken.toFront();
     }
 
     public Image getToken() {
         return token;
     }
+
+    public ImageView getTokenFrame () {return pToken;}
 
     public Tile getTile() {
         return tile;
@@ -88,4 +95,49 @@ public class Player {
     public String getColor() {
         return color;
     }
+
+    //Animations
+    public void MovePlayer(int moveBy){
+        if (moveBy==1 && this.tile.getNum()==0 && locked) locked=false;
+
+        if (!locked){
+           int source = this.tile.getNum();
+
+           int dest;
+           if (this.tile.getNum()+moveBy>100)
+           return;
+           else dest=this.tile.getNum()+moveBy;
+
+            System.out.println(dest);
+           int current=source;
+           TranslateTransition translate = new TranslateTransition();
+           translate.setNode(this.pToken);
+           while (current!=dest){
+               System.out.println("CURRENTLY AT:"+current);
+               if (current%10==0){
+                      this.pToken.setTranslateY(this.pToken.getTranslateY()-60);
+//                    translate.setFromY(this.pToken.getTranslateY());
+//                    translate.setToY(this.pToken.getTranslateY()-60);
+               }
+               else{
+                   if ((current/10)%2==0){
+                       this.pToken.setTranslateX(this.pToken.getTranslateX()+60);
+//                       translate.setFromX(this.pToken.getTranslateX());
+//                       translate.setToX(this.pToken.getTranslateX()+60);
+                   }
+                   else {
+                       this.pToken.setTranslateX(this.pToken.getTranslateX()-60);
+//                       translate.setFromX(this.pToken.getTranslateX());
+//                       translate.setToX(this.pToken.getTranslateX()-60);
+                   }
+               }
+               translate.play();
+               current++;
+           }
+           this.tile=Controller.TileArray.get(dest);
+//           if (this.tile.getNum()==100)
+//               System.out.println("WINNERS "+this.getName());
+        }
+    }
 }
+

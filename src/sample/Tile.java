@@ -10,7 +10,7 @@ public class Tile extends Rectangle{
     private Snake snake;
     private Ladder ladder;
     private final double p1Xoffset = 11.0;
-    private final double pYoffset = 30.0;
+    private final double pYoffset = 27.0;
     private final double p2Xoffset = 31.0;
 
     Tile(int TileSize, int number,Color color){
@@ -58,12 +58,17 @@ public class Tile extends Rectangle{
         }
     }
 
-    public int getNum() {
-        return num;
+    public void show(){
+        System.out.print(num+" ");
     }
+
 
     public double getPlayerY(Player player){
         return this.getTranslateY()+ pYoffset;
+    }
+
+    public int getNum() {
+        return num;
     }
 
 }
