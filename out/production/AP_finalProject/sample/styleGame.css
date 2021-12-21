@@ -11,7 +11,13 @@
     -fx-font-family: "DejaVu Sans";
     -fx-font-weight: bold;
 }
-/*.Label{*/
-/*    -fx-font-family: "DejaVu Sans Bold";*/
-/*    -fx-font-size: 24.0;*/
-/*}*/
+#DICE{
+    -fx-background-color: #000000;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
+#DICE:hover{
+    -fx-background-color: #ffffff;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}

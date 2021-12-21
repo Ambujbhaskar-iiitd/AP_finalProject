@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -37,7 +38,6 @@ public class Controller {
     @FXML
     private Label DiceLbl;
 
-
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -50,7 +50,7 @@ public class Controller {
     private Pane GameRoot;
     private static boolean player1turn = true;
     static ArrayList<Tile> TileArray = new ArrayList<>(101);
-    private Dice gameDice = new Dice();
+    private static Dice gameDice = new Dice();
 
     public void startNewGame(ActionEvent e) throws IOException {
         root = FXMLLoader.load(getClass().getResource("NewGameOptions.fxml"));
@@ -96,13 +96,16 @@ public class Controller {
 
         Player.showPlayerNames(player1, player2, GameRoot);
 
+        makeDice();
+
         Stage GameStage = new Stage();
         Image logo = new Image("logo.png");
         GameStage.getIcons().add(logo);
         GameStage.setTitle("Snake & Ladder");
 
+
         scene = new Scene(GameRoot);
-        scene.getStylesheets().add(getClass().getResource("styleMenu.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("styleGame.css").toExternalForm());
         GameStage.setScene(scene);
         GameStage.setHeight(boardHeight);
         GameStage.setWidth(boardWidth);
@@ -144,6 +147,9 @@ public class Controller {
             }
             System.out.println();
         }
+
+
+
         addBoardImg();
         addUpArrows();
     }
@@ -181,9 +187,37 @@ public class Controller {
         frame.toFront();
     }
 
-    public void RollDice(ActionEvent e) throws IOException, InterruptedException {
+    public void makeDice(){
+        gameDice.setTranslateX(277);
+        gameDice.setTranslateY(687);
+        gameDice.setPrefHeight(76);
+        gameDice.setPrefWidth(76);
+
+        gameDice.setId("DICE");
+
+        gameDice.setOnAction(diceClick);
+        GameRoot.getChildren().add(gameDice);
+    }
+
+    EventHandler<ActionEvent> diceClick = new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            try {
+                RollDice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    public void RollDice() throws IOException, InterruptedException {
         int roll = gameDice.roll();
-        DiceLbl.setText("Number: " + roll);
+//        DiceLbl.setText("Roll: " + roll);
+//        DiceLbl.setTextFill(Color.WHITE);
+//        DiceLbl.setFont(Font.font("Dejavu Sans Bold"));
+
         if (player1turn) {
             player1.MovePlayer(roll);
             player1turn = false;
@@ -194,7 +228,7 @@ public class Controller {
 
         if (player1.getTile().getNum() == 100 || player2.getTile().getNum() == 100) {
             Thread.sleep(1000);
-            Platform.exit();
+            stage.close();
         }
     }
 }
