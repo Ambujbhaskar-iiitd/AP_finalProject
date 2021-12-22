@@ -1,0 +1,19 @@
+.root{
+    -fx-background-color: #9a3232;
+}
+#btn1{
+    -fx-background-color: #54cff5;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
+#btn1:hover{
+    -fx-background-color: #46afce;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
+#DICE{
+    -fx-background-color: #ffffff;
+}
+#DICE:hover{
+    -fx-background-color: #fff8f8;
+}

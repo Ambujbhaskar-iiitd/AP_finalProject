@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>appPackage</OriginalElement>
+  <nodes>
+    <node x="695.875" y="832.0">appPackage.Dice</node>
+    <node x="733.0883152173914" y="1951.0">appPackage.DiceRollAudio</node>
+    <node x="470.9515398550726" y="1096.0">appPackage.ArrowPoint</node>
+    <node x="227.75" y="0.0">appPackage.Snake</node>
+    <node x="956.875" y="0.0">appPackage.Main</node>
+    <node x="180.75498188405803" y="2412.0">appPackage.movement</node>
+    <node x="0.0" y="0.0">appPackage.Ladder</node>
+    <node x="431.0" y="1621.0">appPackage.Controller</node>
+    <node x="168.9515398550726" y="744.0">appPackage.Player</node>
+    <node x="670.2848731884059" y="392.0">appPackage.DiceRoll</node>
+    <node x="171.21331521739143" y="205.0">appPackage.Tile</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="appPackage.Player" target="appPackage.Tile" relationship="TO_ONE">
+      <point x="70.25" y="-391.5" />
+      <point x="379.7015398550726" y="722.0" />
+      <point x="327.0466485507247" y="722.0" />
+      <point x="62.33333333333326" y="237.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.Ladder" relationship="CREATE">
+      <point x="-62.75" y="-369.5" />
+      <point x="493.75" y="1559.0" />
+      <point x="58.5" y="1559.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="appPackage.Player" target="appPackage.movement" relationship="CREATE">
+      <point x="0.0" y="391.5" />
+      <point x="309.4515398550726" y="1549.0" />
+      <point x="269.254981884058" y="1549.0" />
+      <point x="0.0" y="-116.5" />
+    </edge>
+    <edge source="appPackage.Tile" target="appPackage.Snake" relationship="TO_ONE">
+      <point x="46.75" y="-237.5" />
+      <point x="311.4633152173914" y="154.0" />
+      <point x="288.25" y="154.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+    <edge source="appPackage.Tile" target="appPackage.Snake" relationship="DEPENDENCY">
+      <point x="-46.75" y="-237.5" />
+      <point x="217.96331521739143" y="184.0" />
+      <point x="80.20153985507261" y="184.0" />
+      <point x="80.20153985507261" y="174.0" />
+      <point x="90.20153985507261" y="174.0" />
+      <point x="90.20153985507261" y="144.0" />
+      <point x="247.91666666666669" y="144.0" />
+      <point x="-40.33333333333334" y="61.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.Dice" relationship="TO_ONE">
+      <point x="62.75" y="-369.5" />
+      <point x="619.25" y="1599.0" />
+      <point x="789.9895833333335" y="1599.0" />
+      <point x="789.9895833333335" y="1589.0" />
+      <point x="799.9895833333335" y="1589.0" />
+      <point x="799.9895833333335" y="1569.0" />
+      <point x="803.875" y="1569.0" />
+      <point x="0.0" y="303.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.Player" relationship="TO_ONE">
+      <point x="62.75" y="-369.5" />
+      <point x="619.25" y="1599.0" />
+      <point x="789.9895833333335" y="1599.0" />
+      <point x="789.9895833333335" y="1559.0" />
+      <point x="769.0117753623188" y="1559.0" />
+      <point x="769.0117753623188" y="1549.0" />
+      <point x="403.1182065217393" y="1549.0" />
+      <point x="93.66666666666669" y="391.5" />
+    </edge>
+    <edge source="appPackage.Player" target="appPackage.Tile" relationship="DEPENDENCY">
+      <point x="-70.25" y="-391.5" />
+      <point x="239.2015398550726" y="722.0" />
+      <point x="242.6367753623188" y="722.0" />
+      <point x="242.6367753623188" y="712.0" />
+      <point x="264.7133152173914" y="712.0" />
+      <point x="0.0" y="237.5" />
+    </edge>
+    <edge source="appPackage.Tile" target="appPackage.Player" relationship="DEPENDENCY">
+      <point x="0.0" y="237.5" />
+      <point x="264.7133152173914" y="712.0" />
+      <point x="242.6367753623188" y="712.0" />
+      <point x="242.6367753623188" y="722.0" />
+      <point x="239.2015398550726" y="722.0" />
+      <point x="-70.25" y="-391.5" />
+    </edge>
+    <edge source="appPackage.DiceRoll" target="appPackage.Dice" relationship="TO_ONE">
+      <point x="-39.33333333333337" y="50.5" />
+      <point x="689.9515398550725" y="722.0" />
+      <point x="731.875" y="722.0" />
+      <point x="-72.0" y="-303.5" />
+    </edge>
+    <edge source="appPackage.DiceRollAudio" target="appPackage.Dice" relationship="DEPENDENCY">
+      <point x="35.5" y="-39.5" />
+      <point x="839.5883152173914" y="1599.0" />
+      <point x="875.875" y="1599.0" />
+      <point x="72.0" y="303.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.Snake" relationship="CREATE">
+      <point x="-62.75" y="-369.5" />
+      <point x="493.75" y="1559.0" />
+      <point x="460.4515398550726" y="1559.0" />
+      <point x="460.4515398550726" y="184.0" />
+      <point x="328.58333333333337" y="184.0" />
+      <point x="40.33333333333337" y="61.5" />
+    </edge>
+    <edge source="appPackage.Tile" target="appPackage.Ladder" relationship="TO_ONE">
+      <point x="46.75" y="-237.5" />
+      <point x="311.4633152173914" y="154.0" />
+      <point x="97.5" y="154.0" />
+      <point x="39.0" y="61.5" />
+    </edge>
+    <edge source="appPackage.movement" target="appPackage.Player" relationship="DEPENDENCY">
+      <point x="-59.0" y="-116.5" />
+      <point x="210.25498188405803" y="2391.0" />
+      <point x="159.58831521739137" y="2391.0" />
+      <point x="159.58831521739137" y="2381.0" />
+      <point x="242.30344202898544" y="2381.0" />
+      <point x="242.30344202898544" y="1599.0" />
+      <point x="215.78487318840592" y="1599.0" />
+      <point x="-93.66666666666667" y="391.5" />
+    </edge>
+    <edge source="appPackage.movement" target="appPackage.Player" relationship="TO_ONE">
+      <point x="59.0" y="-116.5" />
+      <point x="328.254981884058" y="2391.0" />
+      <point x="694.5765398550726" y="2391.0" />
+      <point x="694.5765398550726" y="1569.0" />
+      <point x="769.0117753623188" y="1569.0" />
+      <point x="769.0117753623188" y="1549.0" />
+      <point x="403.1182065217393" y="1549.0" />
+      <point x="93.66666666666669" y="391.5" />
+    </edge>
+    <edge source="appPackage.Tile" target="appPackage.Ladder" relationship="DEPENDENCY">
+      <point x="-46.75" y="-237.5" />
+      <point x="217.96331521739143" y="184.0" />
+      <point x="80.20153985507261" y="184.0" />
+      <point x="80.20153985507261" y="164.0" />
+      <point x="47.5" y="164.0" />
+      <point x="47.5" y="154.0" />
+      <point x="19.5" y="154.0" />
+      <point x="-39.0" y="61.5" />
+    </edge>
+    <edge source="appPackage.movement" target="appPackage.Controller" relationship="DEPENDENCY">
+      <point x="-59.0" y="-116.5" />
+      <point x="210.25498188405803" y="2391.0" />
+      <point x="159.58831521739137" y="2391.0" />
+      <point x="159.58831521739137" y="2381.0" />
+      <point x="556.5" y="2381.0" />
+      <point x="0.0" y="369.5" />
+    </edge>
+    <edge source="appPackage.DiceRoll" target="appPackage.Dice" relationship="DEPENDENCY">
+      <point x="39.33333333333337" y="50.5" />
+      <point x="768.6182065217392" y="702.0" />
+      <point x="875.875" y="702.0" />
+      <point x="72.0" y="-303.5" />
+    </edge>
+    <edge source="appPackage.DiceRollAudio" target="appPackage.Dice" relationship="TO_ONE">
+      <point x="-35.5" y="-39.5" />
+      <point x="768.5883152173914" y="1579.0" />
+      <point x="799.9895833333335" y="1579.0" />
+      <point x="799.9895833333335" y="1569.0" />
+      <point x="803.875" y="1569.0" />
+      <point x="0.0" y="303.5" />
+    </edge>
+    <edge source="appPackage.movement" target="appPackage.Ladder" relationship="DEPENDENCY">
+      <point x="-59.0" y="-116.5" />
+      <point x="210.25498188405803" y="2391.0" />
+      <point x="159.58831521739137" y="2391.0" />
+      <point x="159.58831521739137" y="2381.0" />
+      <point x="47.5" y="2381.0" />
+      <point x="47.5" y="154.0" />
+      <point x="19.5" y="154.0" />
+      <point x="-39.0" y="61.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.Tile" relationship="CREATE">
+      <point x="-62.75" y="-369.5" />
+      <point x="493.75" y="1559.0" />
+      <point x="106.45153985507261" y="1559.0" />
+      <point x="106.45153985507261" y="712.0" />
+      <point x="202.37998188405805" y="712.0" />
+      <point x="-62.33333333333337" y="237.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.Dice" relationship="CREATE">
+      <point x="-62.75" y="-369.5" />
+      <point x="493.75" y="1559.0" />
+      <point x="731.875" y="1559.0" />
+      <point x="-72.0" y="303.5" />
+    </edge>
+    <edge source="appPackage.Dice" target="appPackage.DiceRoll" relationship="CREATE">
+      <point x="0.0" y="-303.5" />
+      <point x="803.875" y="712.0" />
+      <point x="729.2848731884059" y="712.0" />
+      <point x="0.0" y="50.5" />
+    </edge>
+    <edge source="appPackage.movement" target="appPackage.Snake" relationship="DEPENDENCY">
+      <point x="-59.0" y="-116.5" />
+      <point x="210.25498188405803" y="2391.0" />
+      <point x="159.58831521739137" y="2391.0" />
+      <point x="159.58831521739137" y="2381.0" />
+      <point x="95.45153985507261" y="2381.0" />
+      <point x="95.45153985507261" y="164.0" />
+      <point x="90.20153985507261" y="164.0" />
+      <point x="90.20153985507261" y="144.0" />
+      <point x="247.91666666666669" y="144.0" />
+      <point x="-40.33333333333334" y="61.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.ArrowPoint" relationship="CREATE">
+      <point x="-62.75" y="-369.5" />
+      <point x="493.75" y="1559.0" />
+      <point x="558.9515398550726" y="1559.0" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="appPackage.movement" target="appPackage.Tile" relationship="DEPENDENCY">
+      <point x="-59.0" y="-116.5" />
+      <point x="210.25498188405803" y="2391.0" />
+      <point x="159.58831521739137" y="2391.0" />
+      <point x="159.58831521739137" y="2381.0" />
+      <point x="158.4515398550726" y="2381.0" />
+      <point x="158.4515398550726" y="722.0" />
+      <point x="242.6367753623188" y="722.0" />
+      <point x="242.6367753623188" y="712.0" />
+      <point x="264.7133152173914" y="712.0" />
+      <point x="0.0" y="237.5" />
+    </edge>
+    <edge source="appPackage.Controller" target="appPackage.Player" relationship="CREATE">
+      <point x="-62.75" y="-369.5" />
+      <point x="493.75" y="1599.0" />
+      <point x="269.254981884058" y="1599.0" />
+      <point x="269.254981884058" y="1549.0" />
+      <point x="309.4515398550726" y="1549.0" />
+      <point x="0.0" y="391.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5270168855534708" showDependencies="true" x="426.03777360336585" y="484.9854040583839" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appPackage.Controller">
+   <children>
+      <ImageView fitHeight="354.0" fitWidth="387.0" layoutX="38.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../fortnite-default-unscreen.gif" />
+         </image>
+      </ImageView>
+      <Button fx:id="exitWinBtn" layoutX="139.0" layoutY="411.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="25.0" prefWidth="123.0" text="Main Menu">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
