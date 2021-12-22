@@ -27,39 +27,30 @@ import java.io.IOException;
 
 public class Controller {
     @FXML
-    private Button newGameBtn;
-    @FXML
-    private Button exitBtn;
-    @FXML
     private TextField p1name;
     @FXML
     private TextField p2name;
-    @FXML
-    private Button RollBtn;
-    @FXML
-    private Label DiceLbl;
-
-
 
     private Stage stage;
     private Scene scene;
     private Parent root;
     private static Player player1;
     private static Player player2;
-    private static int boardHeight = 825;
-    private static int boardWidth = 663;
-    private static int tileSize = 60;
-    private Group TileGroup = new Group();
+    private static final int boardHeight = 825;
+    private static final int boardWidth = 663;
+    private static final int tileSize = 60;
+    private final Group TileGroup = new Group();
     private Pane GameRoot;
     private static ImageView arrowFrame;
     private static boolean player1turn = true;
-    private static Dice gameDice = new Dice();
+    private static final Dice gameDice = new Dice();
     private static Stage GameStage;
 
     public void playGame(ActionEvent e) throws IOException {
 
         GameRoot = FXMLLoader.load(getClass().getResource("game.fxml"));
         GameRoot.getChildren().addAll(TileGroup);
+
         // Reading Player names from text fields
         String name1 = p1name.getText();
         String name2 = p2name.getText();
@@ -248,6 +239,15 @@ public class Controller {
     };
 
     public void RollDice() throws IOException, InterruptedException {
+
+//        if (player1turn) {
+//            Player.getP1label().setTextFill(Color.BLUE);
+//        }
+//        else {
+//            Player.getP2label().setTextFill(Color.RED);
+//        }
+
+
         int roll = gameDice.roll();
 
         if (player1turn) {

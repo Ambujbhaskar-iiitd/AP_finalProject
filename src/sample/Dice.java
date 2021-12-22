@@ -20,7 +20,7 @@ public class Dice extends Button {
     private final Image dice4 = new Image("dice4.png");
     private final Image dice5 = new Image("dice5.png");
     private final Image dice6 = new Image("dice6.png");
-    private final Image transition = new Image("diceRollFinal.gif");
+    private final Image transition = new Image("finalDice.gif");
     private Rectangle diceBackground;
     private Image leftPanel;
     private Image rightPanel;
@@ -38,10 +38,10 @@ public class Dice extends Button {
         this.setGraphic(diceFrame);
     }
     public int roll() throws InterruptedException {
-//        this.setNumber(ThreadLocalRandom.current().nextInt(1, 6 + 1));
+        this.setNumber(ThreadLocalRandom.current().nextInt(1, 6 + 1));
 
         //debug
-        this.setNumber(100);
+//        this.setNumber(100);
         System.out.println("Dicenum: "+this.getNumber());
 
         Dice.diceRollAudio.play();

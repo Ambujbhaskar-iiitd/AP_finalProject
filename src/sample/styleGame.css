@@ -13,11 +13,14 @@
 }
 #DICE{
     -fx-background-color: #ffffff;
-    -fx-font-family: "DejaVu Sans";
-    -fx-font-weight: bold;
 }
 #DICE:hover{
     -fx-background-color: #fff8f8;
-    -fx-font-family: "DejaVu Sans";
-    -fx-font-weight: bold;
 }
+/*#player1LBL{*/
+/*    -fx-alignment: top-right;*/
+/*    -fx-text-fill: #000000;*/
+/*}*/
+/*.label{*/
+/*    -fx-alignment: left;*/
+/*}*/

@@ -32,6 +32,8 @@ public class Player {
     private boolean onSnakeTile = false;
     private AudioClip audioLadder = new AudioClip(new File("src/animeWow.mp3").toURI().toString());
     private AudioClip audioSnake = new AudioClip(new File("src/bruh.mp3").toURI().toString());
+    private static Label p1label;
+    private static Label p2label;
 
     public Player(String color, String name, Tile tile, Pane root) {
         this.root = root;
@@ -49,21 +51,22 @@ public class Player {
     }
 
     public static void showPlayerNames(Player player1, Player player2, Pane root){
-        Label p1label = new Label(player1.getName());
-        Label p2label = new Label(player2.getName());
+        p1label = new Label(player1.getName());
+        p2label = new Label(player2.getName());
+
+        p1label.setId("player1LBL");
+        p2label.setId("player2LBL");
 
         p1label.setFont(Font.font("Dejavu Sans Bold", 24.0));
         p2label.setFont(Font.font("Dejavu Sans Bold", 24.0));
-        p1label.setTextFill(Color.WHITE);
+        p1label.setTextFill(Color.BLUE);
         p2label.setTextFill(Color.WHITE);
-        p1label.setTextAlignment(TextAlignment.RIGHT);
-        p2label.setTextAlignment(TextAlignment.LEFT);
 
         p1label.setTranslateX(89);
-        p1label.setTranslateY(720);
+        p1label.setTranslateY(730);
 
-        p2label.setTranslateX(478);
-        p2label.setTranslateY(720);
+        p2label.setTranslateX(461);
+        p2label.setTranslateY(730);
 
         root.getChildren().add(p1label);
         root.getChildren().add(p2label);
@@ -86,6 +89,22 @@ public class Player {
 
         root.getChildren().add(this.pToken);
         this.pToken.toFront();
+    }
+
+    public static Label getP2label() {
+        return p2label;
+    }
+
+    public static void setP2label(Label p2label) {
+        Player.p2label = p2label;
+    }
+
+    public static Label getP1label() {
+        return p1label;
+    }
+
+    public static void setP1label(Label p1label) {
+        Player.p1label = p1label;
     }
 
     public boolean isOnLadderTile() {
@@ -156,6 +175,7 @@ class movement implements Runnable{
     }
     @Override
     public void run() {
+
         try {
             Controller.getArrowFrame().setVisible(false);
             Thread.sleep(1000);
@@ -170,7 +190,7 @@ class movement implements Runnable{
             }
             Controller.getArrowFrame().setVisible(true);
         }
-        if (moveBy == 100 && player.getTile().getNum() == 0 && player.isLocked()) {
+        if (moveBy == 1 && player.getTile().getNum() == 0 && player.isLocked()) {
             player.toggleLocked();
         }
 
@@ -269,6 +289,19 @@ class movement implements Runnable{
                     e.printStackTrace();
                 }
             }
+        }
+
+        labelColorToggle();
+    }
+
+    public void labelColorToggle(){
+        if (Player.getP1label().getTextFill().equals(Color.BLUE)){
+            Player.getP1label().setTextFill(Color.WHITE);
+            Player.getP2label().setTextFill(Color.RED);
+        }
+        else {
+            Player.getP2label().setTextFill(Color.WHITE);
+            Player.getP1label().setTextFill(Color.BLUE);
         }
     }
 
