@@ -1,11 +1,15 @@
 package sample;
 
-import javafx.scene.Node;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 
+import java.io.File;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Dice extends Button {
@@ -21,10 +25,13 @@ public class Dice extends Button {
     private Image leftPanel;
     private Image rightPanel;
     private ImageView diceFrame = new ImageView(dice1);
+    private static AudioClip diceRollAudio = new AudioClip (new File("src/dice.mp3").toURI().toString());
+
+
 
     Dice(){
-        diceFrame.setFitHeight(80);
-        diceFrame.setFitWidth(80);
+        diceFrame.setFitHeight(50);
+        diceFrame.setFitWidth(50);
         diceFrame.setPreserveRatio(true);
         diceFrame.setImage(dice2);
 
@@ -36,9 +43,15 @@ public class Dice extends Button {
         this.setNumber(ThreadLocalRandom.current().nextInt(1, 6 + 1));
         System.out.println("Dicenum: "+this.getNumber());
 
+//        Thread audioThread = new Thread(new DiceRollAudio(this));
+//        audioThread.start();
+
+        Dice.diceRollAudio.play();
+
         DiceRoll rollTask = new DiceRoll(this);
         Thread diceAnimationThread = new Thread(rollTask);
         diceAnimationThread.start();
+//        Platform.runLater(rollTask);
 
         return number;
     }
@@ -79,6 +92,9 @@ public class Dice extends Button {
         this.number = number;
     }
 
+    public AudioClip getDiceRollAudio () {return diceRollAudio;}
+
+
     public ImageView getDiceFrame() {
         return diceFrame;
     }
@@ -90,7 +106,6 @@ public class Dice extends Button {
 
 class DiceRoll implements Runnable{
     private Dice dice;
-
     DiceRoll(Dice dice){
         this.dice = dice;
     }
@@ -100,20 +115,21 @@ class DiceRoll implements Runnable{
     }
     @Override
     public void run(){
-//        dice.setDisable(false);
+
+
         ImageView diceFrame = dice.getDiceFrame();
         Image transition = dice.getTransition();
         int number = dice.getNumber();
 
-//        dice.setVisible(false);
         diceFrame.setImage(transition);
-//        dice.setVisible(true);
+
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
         switch (number){
             case 1:
@@ -136,5 +152,17 @@ class DiceRoll implements Runnable{
                 break;
         }
 //        dice.setDisable(false);
+    }
+}
+
+class DiceRollAudio implements Runnable{
+    private Dice dice;
+    DiceRollAudio(Dice gameDice){
+        this.dice=gameDice;
+    }
+
+    @Override
+    public void run() {
+        dice.getDiceRollAudio().play(100);
     }
 }

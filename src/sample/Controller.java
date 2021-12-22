@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,14 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Controller {
     @FXML
@@ -48,6 +48,7 @@ public class Controller {
     private static int tileSize = 60;
     private Group TileGroup = new Group();
     private Pane GameRoot;
+    private static ImageView arrowFrame;
     private static boolean player1turn = true;
 
     private static Dice gameDice = new Dice();
@@ -86,6 +87,10 @@ public class Controller {
         Player.showPlayerNames(player1, player2, GameRoot);
 
         makeDice();
+        arrowFrame = makeArrow();
+        Thread arrowThread = new Thread(new ArrowPoint(arrowFrame));
+        arrowThread.start();
+
 
         Stage GameStage = new Stage();
         Image logo = new Image("logo.png");
@@ -204,15 +209,31 @@ public class Controller {
     }
 
     public void makeDice(){
-        gameDice.setTranslateX(277);
-        gameDice.setTranslateY(687);
-        gameDice.setPrefHeight(76);
-        gameDice.setPrefWidth(76);
+        gameDice.setTranslateX(292);
+        gameDice.setTranslateY(717);
+        gameDice.setPrefHeight(50);
+        gameDice.setPrefWidth(50);
 
         gameDice.setId("DICE");
 
         gameDice.setOnAction(diceClick);
         GameRoot.getChildren().add(gameDice);
+    }
+
+    public ImageView makeArrow() {
+        Image arrowImg = new Image("down_arrow.png");
+        ImageView arrowFrame = new ImageView(arrowImg);
+        arrowFrame.setTranslateX(291);
+        arrowFrame.setTranslateY(660);
+        arrowFrame.setFitWidth(70);
+        arrowFrame.setFitHeight(70);
+        GameRoot.getChildren().add(arrowFrame);
+        arrowFrame.toFront();
+        return arrowFrame;
+    }
+
+    public static ImageView getArrowFrame() {
+        return arrowFrame;
     }
 
     EventHandler<ActionEvent> diceClick = new EventHandler<ActionEvent>() {
@@ -246,3 +267,24 @@ public class Controller {
 
     }
 }
+
+class ArrowPoint implements Runnable{
+    private ImageView arrowFrame;
+
+    ArrowPoint(ImageView frame){
+        this.arrowFrame = frame;
+    }
+
+    @Override
+    public void run() {
+        TranslateTransition translate = new TranslateTransition();
+        translate.setNode(arrowFrame);
+        translate.setByY(-20);
+        translate.setCycleCount(Animation.INDEFINITE);
+        translate.play();
+    }
+}
+
+
+
+

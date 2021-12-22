@@ -6,10 +6,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+
+import java.io.File;
 
 public class Player {
     private final String name;
@@ -21,6 +24,8 @@ public class Player {
     private boolean locked=true;
     private boolean onLadderTile = false;
     private boolean onSnakeTile = false;
+    private AudioClip audioLadder = new AudioClip(new File("src/jeff.mp3").toURI().toString());
+    private AudioClip audioSnake = new AudioClip(new File("src/bruh.mp3").toURI().toString());
 
     public Player(String color, String name, Tile tile, Pane root) {
         this.root = root;
@@ -51,7 +56,7 @@ public class Player {
         p1label.setTranslateX(89);
         p1label.setTranslateY(720);
 
-        p2label.setTranslateX(460);
+        p2label.setTranslateX(478);
         p2label.setTranslateY(720);
 
         root.getChildren().add(p1label);
@@ -124,6 +129,10 @@ public class Player {
         return color;
     }
 
+    public AudioClip getAudioladder () {return audioLadder;}
+
+    public AudioClip getAudioSnake () {return audioSnake;}
+
     // Player Movement and Animations
     public void MovePlayer(int moveBy){
         Thread movementThread = new Thread(new movement(this, moveBy));
@@ -141,11 +150,22 @@ class movement implements Runnable{
     @Override
     public void run() {
         try {
-            Thread.sleep(500);
+            Controller.getArrowFrame().setVisible(false);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (moveBy == 1 && player.getTile().getNum() == 0 && player.isLocked()) player.toggleLocked();
+        if (moveBy != 1 && player.getTile().getNum() == 0 && player.isLocked()){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Controller.getArrowFrame().setVisible(true);
+        }
+        if (moveBy == 1 && player.getTile().getNum() == 0 && player.isLocked()) {
+            player.toggleLocked();
+        }
 
         if (!player.isLocked()) {
             int source = player.getTile().getNum();
@@ -195,7 +215,9 @@ class movement implements Runnable{
                 translate.setFromY(player.getTokenFrame().getTranslateY());
                 translate.setToX(Tile.getTile(dest).getPlayerX(player));
                 translate.setToY(Tile.getTile(dest).getPlayerY(player));
+                translate.setDuration(Duration.seconds(2));
                 translate.play();
+                player.getAudioSnake().play();
             }
             else if (player.getTile().getLadder() != null) {
                 player.setOnLadderTile(true);
@@ -207,9 +229,12 @@ class movement implements Runnable{
                 translate.setFromY(player.getTokenFrame().getTranslateY());
                 translate.setToX(Tile.getTile(dest).getPlayerX(player));
                 translate.setToY(Tile.getTile(dest).getPlayerY(player));
+                translate.setDuration(Duration.seconds(2));
                 translate.play();
+                player.getAudioladder().play();
             }
 
+            Controller.getArrowFrame().setVisible(true);
             player.setTile(Tile.TileArray.get(dest));
             if (player.getTile().getNum() == 100) System.out.println("WINNERS " + player.getName());
         }
