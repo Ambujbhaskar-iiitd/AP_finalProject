@@ -1,0 +1,23 @@
+.root{
+    -fx-background-color: #6b329a;
+}
+#back2mainMenuBtn{
+    -fx-background-color: #54cff5;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
+#back2mainMenuBtn:hover{
+    -fx-background-color: #46afce;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
+#playGameBtn{
+    -fx-background-color: #59f554;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
+#playGameBtn:hover{
+    -fx-background-color: #4dd248;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
