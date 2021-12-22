@@ -139,77 +139,79 @@ class movement implements Runnable{
         this.moveBy = moveBy;
     }
     @Override
-    public void run(){
+    public void run() {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (moveBy==1 && player.getTile().getNum()==0 && player.isLocked()) player.toggleLocked();
+        if (moveBy == 1 && player.getTile().getNum() == 0 && player.isLocked()) player.toggleLocked();
 
-        if (!player.isLocked()){
+        if (!player.isLocked()) {
             int source = player.getTile().getNum();
 
             int dest;
-            if (player.getTile().getNum()+moveBy>100)
+            if (player.getTile().getNum() + moveBy > 100)
                 return;
-            else if (player.getTile().getSnake()!= null){
+
+            dest = player.getTile().getNum() + moveBy;
+
+            System.out.println("dest: " + dest);
+            int current = source;
+            TranslateTransition translate;
+            while (current != dest) {
+                translate = new TranslateTransition();
+                translate.setNode(player.getTokenFrame());
+                System.out.println("CURRENTLY AT:" + current);
+
+                if (current % 10 == 0) {
+                    translate.setByY(-60);
+
+                } else {
+                    if ((current / 10) % 2 == 0) {
+                        translate.setByX(60);
+                    } else {
+                        translate.setByX(-60);
+                    }
+                }
+                translate.play();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                current++;
+            }
+
+            player.setTile(Tile.TileArray.get(dest));
+
+            if (player.getTile().getSnake() != null) {
                 player.setOnSnakeTile(true);
                 dest = player.getTile().getSnake().getTail();
+
+                translate = new TranslateTransition();
+                translate.setNode(player.getTokenFrame());
+                translate.setFromX(player.getTokenFrame().getTranslateX());
+                translate.setFromY(player.getTokenFrame().getTranslateY());
+                translate.setToX(Tile.getTile(dest).getPlayerX(player));
+                translate.setToY(Tile.getTile(dest).getPlayerY(player));
+                translate.play();
             }
-            else if (player.getTile().getLadder()!=null){
+            else if (player.getTile().getLadder() != null) {
                 player.setOnLadderTile(true);
                 dest = player.getTile().getLadder().getTop();
-            }
-            else dest=player.getTile().getNum()+moveBy;
 
-            System.out.println("dest: "+ dest);
-            int current=source;
-            TranslateTransition translate;
-
-            if (player.isOnLadderTile()){
                 translate = new TranslateTransition();
                 translate.setNode(player.getTokenFrame());
-                translate.setFromX(Tile.getTile(dest).getPlayerX(player));
-                translate.setFromY(Tile.getTile(dest).getPlayerY(player));
+                translate.setFromX(player.getTokenFrame().getTranslateX());
+                translate.setFromY(player.getTokenFrame().getTranslateY());
+                translate.setToX(Tile.getTile(dest).getPlayerX(player));
+                translate.setToY(Tile.getTile(dest).getPlayerY(player));
                 translate.play();
             }
-            else if (player.isOnSnakeTile()){
-                translate = new TranslateTransition();
-                translate.setNode(player.getTokenFrame());
-                translate.setFromX(Tile.getTile(dest).getPlayerX(player));
-                translate.setFromY(Tile.getTile(dest).getPlayerY(player));
-                translate.play();
-            }
-            else {
-                while (current!=dest){
-                    translate = new TranslateTransition();
-                    translate.setNode(player.getTokenFrame());
-                    System.out.println("CURRENTLY AT:"+current);
 
-                    if (current%10==0){
-                        translate.setByY(-60);
-
-                    }
-                    else{
-                        if ((current/10)%2==0){
-                            translate.setByX(60);
-                        }
-                        else {
-                            translate.setByX(-60);
-                        }
-                    }
-                    translate.play();
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    current++;
-                }
-            }
             player.setTile(Tile.TileArray.get(dest));
-            if (player.getTile().getNum()==100) System.out.println("WINNERS "+player.getName());
+            if (player.getTile().getNum() == 100) System.out.println("WINNERS " + player.getName());
         }
     }
 
