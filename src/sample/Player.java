@@ -2,17 +2,23 @@ package sample;
 
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Player {
     private final String name;
@@ -24,7 +30,7 @@ public class Player {
     private boolean locked=true;
     private boolean onLadderTile = false;
     private boolean onSnakeTile = false;
-    private AudioClip audioLadder = new AudioClip(new File("src/jeff.mp3").toURI().toString());
+    private AudioClip audioLadder = new AudioClip(new File("src/animeWow.mp3").toURI().toString());
     private AudioClip audioSnake = new AudioClip(new File("src/bruh.mp3").toURI().toString());
 
     public Player(String color, String name, Tile tile, Pane root) {
@@ -69,10 +75,11 @@ public class Player {
         this.pToken.setImage(this.getToken());
         if (this.color.equals("BLUE")){
             this.pToken.setFitHeight(36);
+            this.pToken.setFitWidth(27);
         }else {
             this.pToken.setFitHeight(35);
+            this.pToken.setFitWidth(25);
         }
-        this.pToken.setFitWidth(20);
 
         this.pToken.setTranslateY(waitingTile.getPlayerY(this));
         this.pToken.setTranslateX(waitingTile.getPlayerX(this));
@@ -163,7 +170,7 @@ class movement implements Runnable{
             }
             Controller.getArrowFrame().setVisible(true);
         }
-        if (moveBy == 1 && player.getTile().getNum() == 0 && player.isLocked()) {
+        if (moveBy == 100 && player.getTile().getNum() == 0 && player.isLocked()) {
             player.toggleLocked();
         }
 
@@ -176,13 +183,13 @@ class movement implements Runnable{
 
             dest = player.getTile().getNum() + moveBy;
 
-            System.out.println("dest: " + dest);
+            System.out.println("dest "+player.getName()+ " : " + dest);
             int current = source;
             TranslateTransition translate;
+            System.out.println("CURRENTLY "+player.getName()+ " AT:" + current);
             while (current != dest) {
                 translate = new TranslateTransition();
                 translate.setNode(player.getTokenFrame());
-                System.out.println("CURRENTLY AT:" + current);
 
                 if (current % 10 == 0) {
                     translate.setByY(-60);
@@ -201,6 +208,7 @@ class movement implements Runnable{
                     e.printStackTrace();
                 }
                 current++;
+                System.out.println("CURRENTLY "+player.getName()+ " AT:" + current);
             }
 
             player.setTile(Tile.TileArray.get(dest));
@@ -236,8 +244,43 @@ class movement implements Runnable{
 
             Controller.getArrowFrame().setVisible(true);
             player.setTile(Tile.TileArray.get(dest));
-            if (player.getTile().getNum() == 100) System.out.println("WINNERS " + player.getName());
+
+            if (player.getTile().getNum() == 100) {
+                System.out.println("WINNER is = " + player.getName());
+                try {
+                    Pane root = FXMLLoader.load(getClass().getResource("winScreen.fxml"));
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("styleWin.css").toExternalForm());
+
+                    Platform.runLater(() -> {
+
+                        showLabel(root);
+                        Stage winStage = new Stage();
+                        winStage.getIcons().add(new Image("logo.png"));
+                        winStage.setTitle(player.getName()+ " Won !!!");
+                        winStage.setScene(scene);
+                        winStage.centerOnScreen();
+                        winStage.setResizable(false);
+                        winStage.show();
+                        Controller.getGameStage().close();
+                            }
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+    }
+
+    public void showLabel(Pane root){
+        Label winLbl = new Label();
+        winLbl.setTranslateX(49);
+        winLbl.setTranslateY(382);
+        winLbl.setPrefWidth(303);
+        winLbl.setPrefHeight(35);
+        winLbl.setTextAlignment(TextAlignment.CENTER);
+        winLbl.setText(player.getName()+" Won!!!");
+        root.getChildren().add(winLbl);
     }
 
     public Player getPlayer() {

@@ -1,0 +1,19 @@
+.root{
+    -fx-background-color: #ffffff;
+}
+.label{
+    -fx-text-fill: #420000;
+    -fx-font-family: "DejaVu Sans Bold";
+    -fx-alignment: center;
+    -fx-font: 24;
+}
+.button{
+    -fx-background-color: #54f5bd;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}
+.button:hover{
+    -fx-background-color: #389370;
+    -fx-font-family: "DejaVu Sans";
+    -fx-font-weight: bold;
+}

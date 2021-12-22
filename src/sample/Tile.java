@@ -14,9 +14,9 @@ public class Tile extends Rectangle{
     private final int num;
     private Snake snake;
     private Ladder ladder;
-    private final double p1Xoffset = 11.0;
+    private final double p1Xoffset = 9.0;
     private final double pYoffset = 27.0;
-    private final double p2Xoffset = 31.0;
+    private final double p2Xoffset = 29.0;
 
     Tile(int TileSize, int number,Color color){
         tileSize = TileSize;

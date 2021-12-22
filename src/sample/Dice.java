@@ -38,20 +38,17 @@ public class Dice extends Button {
         this.setGraphic(diceFrame);
     }
     public int roll() throws InterruptedException {
-        // This is incomplete currently, roll should incorporate everything, including
-        // roll animation and initial final state change of the dice imageView.
-        this.setNumber(ThreadLocalRandom.current().nextInt(1, 6 + 1));
-        System.out.println("Dicenum: "+this.getNumber());
+//        this.setNumber(ThreadLocalRandom.current().nextInt(1, 6 + 1));
 
-//        Thread audioThread = new Thread(new DiceRollAudio(this));
-//        audioThread.start();
+        //debug
+        this.setNumber(100);
+        System.out.println("Dicenum: "+this.getNumber());
 
         Dice.diceRollAudio.play();
 
         DiceRoll rollTask = new DiceRoll(this);
         Thread diceAnimationThread = new Thread(rollTask);
         diceAnimationThread.start();
-//        Platform.runLater(rollTask);
 
         return number;
     }

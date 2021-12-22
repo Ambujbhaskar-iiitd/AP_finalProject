@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -38,6 +39,8 @@ public class Controller {
     @FXML
     private Label DiceLbl;
 
+
+
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -50,8 +53,8 @@ public class Controller {
     private Pane GameRoot;
     private static ImageView arrowFrame;
     private static boolean player1turn = true;
-
     private static Dice gameDice = new Dice();
+    private static Stage GameStage;
 
     public void playGame(ActionEvent e) throws IOException {
 
@@ -68,6 +71,7 @@ public class Controller {
         for (Tile t: Tile.TileArray) {
             System.out.println("tileno.: "+t.getNum());
         }
+        System.out.println("Board loaded");
 
         Tile.addSnake(new Snake(99, 59));
         Tile.addSnake(new Snake(93, 69));
@@ -91,12 +95,10 @@ public class Controller {
         Thread arrowThread = new Thread(new ArrowPoint(arrowFrame));
         arrowThread.start();
 
-
-        Stage GameStage = new Stage();
+        GameStage = new Stage();
         Image logo = new Image("logo.png");
         GameStage.getIcons().add(logo);
         GameStage.setTitle("Snake & Ladder");
-
 
         scene = new Scene(GameRoot);
         scene.getStylesheets().add(getClass().getResource("styleGame.css").toExternalForm());
@@ -104,6 +106,7 @@ public class Controller {
         GameStage.setHeight(boardHeight);
         GameStage.setWidth(boardWidth);
         GameStage.centerOnScreen();
+        GameStage.setResizable(false);
         GameStage.show();
     }
 
@@ -135,7 +138,6 @@ public class Controller {
     }
 
     public void makeBoard() {
-
         //Initializing the TileArray Array List
         Tile temp = new Tile(60, -1, Color.BLACK);
         Tile.TileArray.add(temp);
@@ -143,7 +145,7 @@ public class Controller {
             for (int j = 0; j < 10; j++)
                 Tile.TileArray.add(temp);
         }
-
+        // Creating tiles by nested loop using tileNum
         int counter;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -163,14 +165,9 @@ public class Controller {
                 tile.setTranslateX((j + 0.4) * tileSize);
                 tile.setTranslateY((i + 1) * tileSize);
                 TileGroup.getChildren().add(tile);
-//                tile.show();
                 Tile.TileArray.set(counter, tile);
             }
-//            System.out.println();
         }
-
-
-
         addBoardImg();
         addUpArrows();
     }
@@ -236,6 +233,7 @@ public class Controller {
         return arrowFrame;
     }
 
+    // Creating an EventHandler for DiceRoll
     EventHandler<ActionEvent> diceClick = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -255,19 +253,24 @@ public class Controller {
         if (player1turn) {
             player1.MovePlayer(roll);
             player1turn = false;
-        } else {
+        }
+        else {
             player2.MovePlayer(roll);
             player1turn = true;
         }
+    }
+    public static Stage getGameStage() {
+        return GameStage;
+    }
 
-        if (player1.getTile().getNum() == 100 || player2.getTile().getNum() == 100) {
-            Thread.sleep(1000);
-            stage.close();
-        }
-
+    public static void setGameStage(Stage gameStage) {
+        GameStage = gameStage;
     }
 }
 
+
+
+// Defining a runnable for Arrow Animation
 class ArrowPoint implements Runnable{
     private ImageView arrowFrame;
 
